@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Array.h"
 using namespace std;
+setlocale(LC_ALL, "Russian");
 /*
 * brief Класс, описывающий работу с массивом
 */ 
