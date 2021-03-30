@@ -1,99 +1,86 @@
 #include <iostream>
+#include <sstream>
 #include "Array.h"
-using namespace std;
-setlocale(LC_ALL, "Russian");
-/*
-* brief Класс, описывающий работу с массивом
-*/ 
-Array::Array(int n) {
-    /*
-    * brief Размер массива 
-    */
+
+
+Array::Array(size_t n) {
+
     size = n;
-    /*
-    * brief Ввод массива
-    */
-    a = new float[size];
+    data = new float[size];
     for (int i = 0; i != size; i++)
     {
-        a[i] = 0.0;
+        data[i] = 0.0;
     }
 }
-/*
-* brief Деструктор по умолчанию
-*/
+
+Array::Array(const Array& source)
+{
+    size = source.size;
+    data = new float[size];
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = source.data[i];
+    }
+}
+
 Array::~Array() {
-    delete[]a;
+    delete[]data;
 }
-/*
-* Функция ввода массива
-*/
-void Array::cinArray()
+
+void Array::Init()
 {
     for (int i = 0; i != size; i++)
     {
-        cin >> a[i];
+        std::cin >> data[i];
     }
 }
-/*
-* brief Функция вывода массива
-*/
-void Array::coutArray()
+
+std::string Array::coutArray()
 {
+    std::string s;
     for (int i = 0; i != size; i++)
     {
-        cout << a[i] << " ";
+        std::ostringstream buff;
+        buff << data[i];
+        s += buff.str() + " ";
     }
-    cout << endl;
+    return s;
 }
-/*
-* brief Возвращает максимальное значение массива
-*/
+
 float Array::max()
 {
-    float m = a[0];
+    float m = data[0];
     for (int i = 1; i != size; i++)
     {
-        if (a[i] > m)
+        if (data[i] > m)
         {
-            m = a[i];
+            m = data[i];
         }
     }
     return m;
 }
-/*
-* brief Возвращает минимальное значение массива
-*/
+
 float Array::min()
 {
-    float n = a[0];
+    float n = data[0];
     for (int i = 1; i != size; i++)
     {
-        if (a[i] < n)
+        if (data[i] < n)
         {
-            n = a[i];
+            n = data[i];
         }
     }
     return n;
 }
-/*
-* brief Ищет и возвращает заданный элемент массива по ключу методом линейного поиска.
-*/
-int Array::find(float x)
+
+float Array::find(int x)
 {
-    int c = -1;
-    for (int i = 0; i != size; i++)
-    {
-        if (a[i] == x)
-        {
-            c = i;
-        }
-    }
-    return c;
+    if (x<size && x>-1)
+        return data[x];
+    else
+        return NULL;
 }
-/*
-* brief Сортирует массив с помощью прямого выбора
-*/
+
 void Array::sortArray(int mode)
 {
     for (int i = 0; i != size - 1; i++)
@@ -102,20 +89,20 @@ void Array::sortArray(int mode)
         {
             if (mode == -1)
             {
-                if (a[i] < a[j])
+                if (data[i] < data[j])
                 {
-                    float z = a[i];
-                    a[i] = a[j];
-                    a[j] = z;
+                    float z = data[i];
+                    data[i] = data[j];
+                    data[j] = z;
                 }
             }
             if (mode == 1)
             {
-                if (a[i] > a[j])
+                if (data[i] > data[j])
                 {
-                    float z = a[i];
-                    a[i] = a[j];
-                    a[j] = z;
+                    float z = data[i];
+                    data[i] = data[j];
+                    data[j] = z;
                 }
             }
         }
