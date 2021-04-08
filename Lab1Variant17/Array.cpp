@@ -1,56 +1,107 @@
 #include <iostream>
 #include <sstream>
 #include "Array.h"
+#include <assert.h>
 
 
-Array::Array(size_t n) {
-
-    size = n;
-    data = new float[size];
-    for (int i = 0; i != size; i++)
+Array::Array(size_t n) : size(n), data(new float[n])
+{
+    for (size_t i = 0; i != size; i++)
     {
         data[i] = 0.0;
     }
 }
 
-Array::Array(const Array& source)
+Array::Array(const Array& source) : size(source.size), data(new float[source.size])
 {
-    size = source.size;
-    data = new float[size];
-    for (int i = 0; i < size; i++)
-    {
-        data[i] = source.data[i];
-    }
+    std::copy(source.data, source.data + size, data);
 }
 
-Array::~Array() {
-    delete[]data;
+Array::~Array()
+{
+    if (data != nullptr)
+        delete[]data;
+    data = nullptr;
 }
 
-void Array::Init()
+std::istream& operator >> (std::istream& input, const Array& a)
 {
-    for (int i = 0; i != size; i++)
+    for (size_t i = 0; i != a.size; i++)
     {
-        std::cin >> data[i];
+        input >> a.data[i];
     }
+    return input;
 }
 
-std::string Array::coutArray()
+std::ostream& operator << (std::ostream& output, const Array& a)
 {
-    std::string s;
-    for (int i = 0; i != size; i++)
+    for (size_t i = 0; i != a.size; i++)
     {
-        std::ostringstream buff;
-        buff << data[i];
-        s += buff.str() + " ";
+        output << a.data[i] << " ";
     }
-    return s;
+    output << std::endl;
+    return output;
+}
+
+float& Array::operator [] (size_t i)
+{
+    assert(0 <= i && i < size);
+    return data[i];
+}
+
+const Array& Array::operator= (const Array& arr)
+{
+    if (&arr != this)
+    {
+        if (data != nullptr)
+            delete[] data;
+        size = arr.size;
+        data = new float[size];
+        for (size_t i = 0; i != size; i++)
+            data[i] = arr.data[i];
+    }
+    return *this;
+}
+
+bool operator == (Array& arrInt, Array& arrInt2)
+{
+    if (arrInt.size != arrInt2.size)
+        return false;
+    else
+    {
+        for (size_t i = 0; i != arrInt.size; i++)
+        {
+            if (arrInt.data[i] != arrInt2.data[i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+std::string Array::ToStr()
+{
+    std::ostringstream buff;
+    for (size_t i = 0; i != size; i++)
+    {
+        buff << std::to_string(data[i]) << " ";
+    }
+    return buff.str();
+}
+
+bool Array::isEmpty()
+{
+    if (data == nullptr)
+        return true;
+    else
+        return false;
 }
 
 float Array::max()
 {
     float m = data[0];
-    for (int i = 1; i != size; i++)
+    for (size_t i = 1; i != size; i++)
     {
         if (data[i] > m)
         {
@@ -63,7 +114,7 @@ float Array::max()
 float Array::min()
 {
     float n = data[0];
-    for (int i = 1; i != size; i++)
+    for (size_t i = 1; i != size; i++)
     {
         if (data[i] < n)
         {
@@ -73,19 +124,26 @@ float Array::min()
     return n;
 }
 
-float Array::find(int x)
+
+size_t Array::find(float x)
 {
-    if (x<size && x>-1)
-        return data[x];
-    else
-        return NULL;
+    size_t c = -1;
+    for (size_t i = 0; i != size; i++)
+    {
+        if (data[i] == x)
+        {
+            c = i;
+        }
+    }
+    return c;
 }
+
 
 void Array::sortArray(int mode)
 {
-    for (int i = 0; i != size - 1; i++)
+    for (size_t i = 0; i != size - 1; i++)
     {
-        for (int j = i + 1; j != size; j++)
+        for (size_t j = i + 1; j != size; j++)
         {
             if (mode == -1)
             {

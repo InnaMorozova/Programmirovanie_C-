@@ -1,6 +1,5 @@
 #pragma once
 
-#define NULL 0
 
 /**
 * \brief Класс, описывающий работу с массивом
@@ -27,17 +26,37 @@ public:
     */
     Array(const Array& source);
     /**
-    * \brief Деструктор по умолчанию
+    * \brief Деструктор
     */
     ~Array();
     /**
-    * \brief Инициализация массива
+    * \brief Оператор ввода массива
     */
-    void Init();
+    friend std::istream& operator >> (std::istream& input, const Array& a);
+    /**
+    * \brief Оператор вывода массива
+    */
+    friend std::ostream& operator << (std::ostream& output, const Array& a);
+    /**
+    * \brief Оператор получения ссылки на элемент
+    */
+    float& operator[] (size_t i);
+    /**
+    * \brief Оператор присваивания
+    */
+    const Array& operator= (const Array& arr);
+    /**
+    * \brief Оператор сравнивания
+    */
+    friend bool operator ==(Array& arrInt, Array& arrInt2);
     /**
     * \brief Формирование строки из элементов массива
     */
-    std::string coutArray();
+    std::string ToStr();
+    /**
+    * \brief Проверка массива на пустоту
+    */
+    bool isEmpty();
     /**
     * \brief Возвращает максимальное значение массива
     */
@@ -49,13 +68,11 @@ public:
     /**
     * \brief Ищет и возвращает заданный элемент массива по ключу методом линейного поиска.
     */
-    float find(int x);
+    size_t find(float x);
     /**
     * \brief Сортирует массив с помощью прямого выбора
     */
     void sortArray(int mode);
 
 };
-
-
 
