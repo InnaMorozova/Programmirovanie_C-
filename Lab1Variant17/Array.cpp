@@ -1,10 +1,10 @@
 #include <iostream>
 #include <sstream>
 #include "Array.h"
-#include <assert.h>
+#include "real.h"
 
 
-Array::Array(size_t n) : size(n), data(new float[n])
+Array::Array(size_t size) : size(size), data(new float[size])
 {
     for (size_t i = 0; i != size; i++)
     {
@@ -45,20 +45,28 @@ std::ostream& operator << (std::ostream& output, const Array& a)
 
 float& Array::operator [] (size_t i)
 {
-    assert(0 <= i && i < size);
-    return data[i];
+    if (i < 0 || i >= size)
+        throw "Array out of range";
+    try
+    {
+        return data[i];
+    }
+    catch (char)
+    {
+        std::cerr << "Array index out of range" << std::endl;
+    }
 }
 
-const Array& Array::operator= (const Array& arr)
+const Array& Array::operator= (const Array& other)
 {
-    if (&arr != this)
+    if (&other != this)
     {
         if (data != nullptr)
             delete[] data;
-        size = arr.size;
+        size = other.size;
         data = new float[size];
         for (size_t i = 0; i != size; i++)
-            data[i] = arr.data[i];
+            data[i] = other.data[i];
     }
     return *this;
 }
@@ -82,60 +90,59 @@ bool operator == (Array& arrInt, Array& arrInt2)
 
 std::string Array::ToStr()
 {
-    std::ostringstream buff;
+    std::ostringstream stringArray;
     for (size_t i = 0; i != size; i++)
     {
-        buff << std::to_string(data[i]) << " ";
+        stringArray << std::to_string(data[i]) << " ";
     }
-    return buff.str();
+    return stringArray.str();
 }
 
 bool Array::isEmpty()
 {
-    if (data == nullptr)
-        return true;
-    else
-        return false;
+    return data == nullptr;
 }
 
 float Array::max()
 {
-    float m = data[0];
+    float max = data[0];
     for (size_t i = 1; i != size; i++)
     {
-        if (data[i] > m)
+        if (data[i] > max)
         {
-            m = data[i];
+            max = data[i];
         }
     }
-    return m;
+    return max;
 }
 
 float Array::min()
 {
-    float n = data[0];
+    float min = data[0];
     for (size_t i = 1; i != size; i++)
     {
-        if (data[i] < n)
+        if (data[i] < min)
         {
-            n = data[i];
+           min = data[i];
         }
     }
-    return n;
+    return min;
 }
 
 
 size_t Array::find(float x)
 {
-    size_t c = -1;
+    size_t index = -1;
     for (size_t i = 0; i != size; i++)
     {
-        if (data[i] == x)
+        real double1 = data[i];
+        real double2 = x;
+        if (double1 == double2)
         {
-            c = i;
+            index = i;
         }
     }
-    return c;
+    return index;
 }
 
 

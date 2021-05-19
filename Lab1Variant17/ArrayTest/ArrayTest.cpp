@@ -3,6 +3,8 @@
 #include "..\programming\programming.cpp"
 #include "..\programming\Array.h"
 #include "..\programming\Array.cpp"
+#include "..\programming\real.h"
+#include "..\programming\real.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,7 +14,7 @@ namespace ArrayTest
 	{
 	public:
 		
-		TEST_METHOD(TestMax)
+		TEST_METHOD(FindMaxSuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -26,7 +28,7 @@ namespace ArrayTest
 			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(x, float(6.0));
 		};
 
-		TEST_METHOD(TestMin)
+		TEST_METHOD(FindMinSuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -40,7 +42,7 @@ namespace ArrayTest
 			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(x, float(-9));
 		};
 
-		TEST_METHOD(TestStr)
+		TEST_METHOD(GetToStrSuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -54,7 +56,7 @@ namespace ArrayTest
 			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(x, std::string("1.300000 -9.000000 5.900000 6.000000 -8.200000 "));
 		};
 
-		TEST_METHOD(TestFind)
+		TEST_METHOD(GetIndexFindSuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -68,7 +70,7 @@ namespace ArrayTest
 			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(x, size_t(1));
 		};
 
-		TEST_METHOD(TestSortIncrease)
+		TEST_METHOD(SortIncreaseSortArraySuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -89,10 +91,10 @@ namespace ArrayTest
 
 			bool s = arr == res;
 
-			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(s, true);
+			Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsTrue(s);
 		};
 
-		TEST_METHOD(TestSortDecrease)
+		TEST_METHOD(SortDecreaseSortArraySuccess)
 		{
 			size_t t = 5;
 			Array arr(t);
@@ -113,7 +115,7 @@ namespace ArrayTest
 
 			bool s = arr == res;
 
-			Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual(s, true);
+			Microsoft::VisualStudio::CppUnitTestFramework::Assert::IsTrue(s);
 		};
 	};
 }
