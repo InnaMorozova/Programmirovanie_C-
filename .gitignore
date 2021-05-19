@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/microsoftoffice,latex
-# Edit at https://www.toptal.com/developers/gitignore?templates=microsoftoffice,latex
+# Created by https://www.toptal.com/developers/gitignore/api/latex,microsoftoffice
+# Edit at https://www.toptal.com/developers/gitignore?templates=latex,microsoftoffice
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
@@ -316,4 +316,4 @@ Backup of *.doc*
 # Visio autosave temporary files
 *.~vsd*
 
-# End of https://www.toptal.com/developers/gitignore/api/microsoftoffice,latex
+# End of https://www.toptal.com/developers/gitignore/api/latex,microsoftoffice
